@@ -8,10 +8,10 @@ import tensorflow as tf
 app = Flask(__name__)
 
 
-__words = None
-__data = None
-__model = None
-__classes = None
+# __words = None
+# __data = None
+# __model = None
+# __classes = None
 
 @app.route("/",methods=['GET','POST'])
 def index():
@@ -42,11 +42,7 @@ def get_response():
         response.headers.add('Access-Control-Allow-Origin','*')
     return response
 
-def get_bot_response(input,words,data,classes,model):
-    global __words = words
-    global __data = data
-    global __classes = classes
-    global __model = model
+def get_bot_response(input,__words,__data,__classes,__model):
     lemmatizer = WordNetLemmatizer()
     text = lemmatizer.lemmatize(input.lower())
     bow_list = []
