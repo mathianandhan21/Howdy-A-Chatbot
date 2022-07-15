@@ -68,10 +68,15 @@ def load_artifacts():
 
 @app.route("/get_response",methods=['GET','POST'])
 def get_response():
-    global __words
-    global __data
-    global __classes
-    global __model
+    with open("./artifacts/words.txt",'r') as f:
+        __words = f.read()
+    with open("./artifacts/file.json",'r') as f:
+         __data = json.loads(f.read())
+
+    with open("./artifacts/classes.txt",'r') as f:
+         __classes = f.read()     
+    __words = __words.split(",")
+    __classes = __classes.split(",")
     print("***********",__words)
     if(type(__words) != "NoneType"):
     # response.headers.add('Access-Control-Allow-Origin','*')
