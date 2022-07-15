@@ -1,15 +1,3 @@
-window.onload = onPageLoad;
-function onPageLoad(){
-    console.log("document loaded");
-//     var url = "http://127.0.0.1:5000/load_artifacts"
-    var url = window.location.origin + "/load_artifacts";
-    $.get(url,function(data,status){
-        if(data){
-            console.log(data)
-        }
-    })
-}
-
 function sendResponse(rawText) {
     var url = window.location.origin + "/get_response";
 //     var url = "http://127.0.0.1:5000/get_response"
