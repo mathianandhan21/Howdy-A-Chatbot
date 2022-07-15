@@ -15,56 +15,8 @@ __classes = None
 
 @app.route("/",methods=['GET','POST'])
 def index():
-    global __words
-    global __data
-    global __classes
-    global __model
-    with open("./artifacts/words.txt",'r') as f:
-        __words = f.read()
-   
-    with open("./artifacts/file.json",'r') as f:
-         __data = json.loads(f.read())
-
-    with open("./artifacts/classes.txt",'r') as f:
-         __classes = f.read()     
-    __words = __words.split(",")
-    __classes = __classes.split(",")
-    # with open("./artifacts/chatbot.pickle",'rb') as f:
-    #     __model = pickle.load(f)
-    __model = tf.keras.models.load_model("./model/1")
     return render_template("app.html")
     
-@app.route("/load_artifacts")
-def load_artifacts():
-    global __words
-    global __data
-    global __classes
-    global __model
-    with open("../artifacts/words.txt",'r') as f:
-        __words = f.read()
-    print("***********",__words)
-   
-    with open("../artifacts/file.json",'r') as f:
-         __data = json.loads(f.read())
-
-    with open("../artifacts/classes.txt",'r') as f:
-         __classes = f.read()     
-    __words = __words.split(",")
-    __classes = __classes.split(",")
-    # with open("./artifacts/chatbot.pickle",'rb') as f:
-    #     __model = pickle.load(f)
-    __model = tf.keras.models.load_model("../model/1")
-    
-   
-    # lables = get_response("what is your age")
-    response = jsonify({
-        'words':"pass"
-    })
-    
-    # response.headers.add('Access-Control-Allow-Origin','*')
-    response.headers.add('Access-Control-Allow-Origin','*')
-
-    pass
 
 @app.route("/get_response",methods=['GET','POST'])
 def get_response():
@@ -74,27 +26,27 @@ def get_response():
          __data = json.loads(f.read())
 
     with open("./artifacts/classes.txt",'r') as f:
-         __classes = f.read()     
+         __classes = f.read()  
+            
+    __model = tf.keras.models.load_model("./model/1")
     __words = __words.split(",")
     __classes = __classes.split(",")
     print("***********",__words)
     if(type(__words) != "NoneType"):
     # response.headers.add('Access-Control-Allow-Origin','*')
         user_response = request.form['user_text']
-        bot_response = get_bot_response(user_response)
+        bot_response = get_bot_response(user_response,__words,__data,__classes,__model)
         response = jsonify({
             'bot_response':bot_response
         })
         response.headers.add('Access-Control-Allow-Origin','*')
     return response
 
-def get_bot_response(input):
-    global __words
-    global __data
-    global __classes
-    global __model
-    # __words = __words.split(",")
-    # __classes = __classes.split(",")
+def get_bot_response(input,words,data,classes,model):
+    global __words = words
+    global __data = data
+    global __classes = classes
+    global __model = model
     lemmatizer = WordNetLemmatizer()
     text = lemmatizer.lemmatize(input.lower())
     bow_list = []
