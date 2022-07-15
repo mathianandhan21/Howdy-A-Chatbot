@@ -21,7 +21,6 @@ def index():
     global __model
     with open("./artifacts/words.txt",'r') as f:
         __words = f.read()
-    print("***********",__words)
    
     with open("./artifacts/file.json",'r') as f:
          __data = json.loads(f.read())
@@ -73,6 +72,7 @@ def get_response():
     global __data
     global __classes
     global __model
+    print("***********",__words)
     if(type(__words) != "NoneType"):
     # response.headers.add('Access-Control-Allow-Origin','*')
         user_response = request.form['user_text']
