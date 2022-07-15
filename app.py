@@ -73,7 +73,7 @@ def get_response():
     global __data
     global __classes
     global __model
-    if(len(__words)>0):
+    if(type(__words) != "NoneType"):
     # response.headers.add('Access-Control-Allow-Origin','*')
         user_response = request.form['user_text']
         bot_response = get_bot_response(user_response)
