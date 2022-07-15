@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!-- <link rel="stylesheet" type="text/css" href="style.css"> -->
+  <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <!-- <script src="app.js"></script> -->
+  <script src="{{ url_for('static',filename='app.js') }}"> </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+  <div class="img"></div>
+  <h1 style="font-style: italic !important ;color: darksalmon;">Howdy's Convo</h1>
+  <!-- <h3>A web implementation of <a href="https://github.com/gunthercox/ChatterBot">ChatterBot</a> using Flask.</h3> -->
+  <div>
+    <div id="chatbox">
+      <p class="botText"><span>Hi! I'm Chatterbot.</span></p>
+    </div>
+    <div id="userInput">
+      <input id="textInput" type="text" name="msg" placeholder="Message">
+      <!-- <input id="buttonInput" type="submit"> <i class="fa fa-paper-plane"></i> -->
+      <i class="fa fa-paper-plane" onclick="getBotResponse()">
+      </i>
+    </div>
+    <script>
+      function getBotResponse() {
+        var rawText = $("#textInput").val();
+        var userHtml = '<p class="userText"><span>' + rawText + '</span></p>';
+        $("#textInput").val("");
+        $("#chatbox").append(userHtml);
+        document.getElementById('userInput').scrollIntoView({ block: 'start', behavior: 'smooth' });
+        sendResponse(rawText);
+      }
+
+      $("#textInput").keypress(function (e) {
+        if ((e.which == 13) && document.getElementById("textInput").value != "") {
+          getBotResponse();
+        }
+      });
+      $("#buttonInput").click(function () {
+        if (document.getElementById("textInput").value != "") {
+          getBotResponse();
+        }
+      })
+    </script>
+  </div>
+</body>
+
+</html>
